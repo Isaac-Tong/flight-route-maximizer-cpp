@@ -16,7 +16,7 @@ Graph::Graph(string routesFileName, string airportFileName)
     // Populates airports:
     mapAirportsToLatLong(airportFileName);
     // // Populates graphMap:
-    // mapStartAirportToEdge(routesFileName);
+    mapStartAirportToEdge(routesFileName);
 
 
 }
