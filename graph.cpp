@@ -12,11 +12,13 @@ Graph::Edge::Edge(string startAirport, string endAirport, string airlineCode, in
 // GRAPH CLASS CONSTRUCTOR
 Graph::Graph(string routesFileName, string airportFileName)
 {
+
     // Populates airports:
     mapAirportsToLatLong(airportFileName);
+    // // Populates graphMap:
+    // mapStartAirportToEdge(routesFileName);
 
-    // Populates graphMap:
-    mapStartAirportToEdge(routesFileName);
+
 }
 
 void Graph::mapStartAirportToEdge(string routeFile)
@@ -92,9 +94,24 @@ void Graph::mapAirportsToLatLong(string airportFile)
         string lat = lineSects[latIdx];   // Extract lattitude of the airport
         string lon = lineSects[lonIdx];   // Extract the longitude of the airport
 
+        //Since some IATA codes are unknown, skip airports which have unknown IATA codes.
+        if(IATA.size() < 3)
+        {
+            continue;
+        }
         // Populates the airportMap
-        airportsMap[IATA].lat = stod(lat);
-        airportsMap[IATA].lon = stod(lon);
+        if ((lat[1] >= '0' && lat[1] <= '9') && (lon[1] >= '0' && lon[1] <= '9'))
+        {
+            airportsMap[IATA].lat = stod(lat);
+            airportsMap[IATA].lon = stod(lon);
+        }
+        else
+        {
+            lat = lineSects[latIdx + 1];
+            lon = lineSects[lonIdx + 1];
+            airportsMap[IATA].lat = stod(lat);
+            airportsMap[IATA].lon = stod(lon);
+        }
     }
 }
 
@@ -108,7 +125,7 @@ void Graph::printGraph()
         cout << "Incident Edges:" << endl;
         for (size_t i = 0; i < (it->second).size(); ++i)
         {
-            cout << "Incident Airport: " << (it->second)[i].endAirport << " Airline Code: " << (it->second)[i].airlineCode << " Weight: " << (it->second)[i].weight << endl; 
+            cout << "Incident Airport: " << (it->second)[i].endAirport << " Airline Code: " << (it->second)[i].airlineCode << " Weight: " << (it->second)[i].weight << endl;
         }
         cout << endl;
     }
@@ -117,11 +134,13 @@ void Graph::printGraph()
 
 void Graph::printAirports()
 {
+    int counter = 1;
     cout << "LIST OF AIRPORTS" << endl;
     cout << "..................." << endl;
     for (auto it = airportsMap.begin(); it != airportsMap.end(); ++it)
     {
-        cout << "Airport: " << it->first << " Lattitude: " << (it->second).lat << " Longitude" << (it->second).lon << endl;
+        cout << counter << " Airport: " << it->first << " Lattitude: " << (it->second).lat << " Longitude: " << (it->second).lon << endl;
+        counter++;
     }
     cout << "..................." << endl;
 }

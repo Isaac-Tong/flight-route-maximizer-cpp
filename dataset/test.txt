@@ -1,0 +1,1 @@
+3105,"Chaudhary Charan Singh International Airport","Lucknow","India","LKO","VILK",26.7605991364,80.8892974854,410,5.5,"N","Asia/Calcutta","airport","OurAirports"
