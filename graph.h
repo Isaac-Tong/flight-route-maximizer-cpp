@@ -32,7 +32,11 @@ private:
         double lon; // longitude
     };
 
-    // Helper functions for translateDataToGraph().
+    // Getters to attain graph and airport to coordinate mapping
+    unordered_map<string, LatLong> getAirportsMap();
+    unordered_map<string, vector<Edge>> getGraphEdges();
+
+    // Helper functions for constructor.
     void mapStartAirportToEdge(string routeFile);
     void mapAirportsToLatLong(string airportFile);
     double weight(string firstAirport, string secondAirport);

@@ -17,8 +17,6 @@ Graph::Graph(string routesFileName, string airportFileName)
     mapAirportsToLatLong(airportFileName);
     // // Populates graphMap:
     mapStartAirportToEdge(routesFileName);
-
-
 }
 
 void Graph::mapStartAirportToEdge(string routeFile)
@@ -169,3 +167,11 @@ void Graph::printAirports()
 // {
 //     return graphMap[airportCode];
 // }
+
+unordered_map<string, Graph::LatLong> Graph::getAirportsMap() {
+    return airportsMap;
+}
+
+unordered_map<string, vector<Graph::Edge>> Graph::getGraphEdges() {
+    return graphEdges;
+}
