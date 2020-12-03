@@ -1,6 +1,7 @@
 #include "graph.h"
 
-Graph::Edge::Edge(string startAirport, string endAirport, string airlineCode) {
+Graph::Edge::Edge(string startAirport, string endAirport, string airlineCode) 
+{
     this->startAirport = startAirport;
     this->endAirport = endAirport;
     this->airlineCode = airlineCode;
@@ -23,12 +24,11 @@ void Graph::translateDataToGraph(string routeFile, string airportFile)
     // Key: String of the airport
     // Value: Struct for the longitude and latitude of the airport
     mapAirportsToLatLong(airportFile);
-
-    // Vector of edges of structs with start airport (IATA), end airport (IATA), alrine code
 }
 
 
-void Graph::mapStartAirportToEdge(string routeFile, unordered_map<string, vector<Edge>>& startAirportToEdge) {
+void Graph::mapStartAirportToEdge(string routeFile, unordered_map<string, vector<Edge>>& startAirportToEdge) 
+{
     // From routes data
     int airlineCodeIdx = 0;
     int startAirIdx = 2;
@@ -58,7 +58,8 @@ void Graph::mapStartAirportToEdge(string routeFile, unordered_map<string, vector
     }
 }
 
-void Graph::mapAirportsToLatLong(string airportFile) {
+void Graph::mapAirportsToLatLong(string airportFile) 
+{
     // From airport data
     int IATAIdx = 4;
     int latIdx = 6;
