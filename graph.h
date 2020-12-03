@@ -10,19 +10,7 @@
 using namespace std;
 class Graph
 {
-
-public:
-    Graph(string routesFileName, string airportFileName); //Constructor
-    
-    //GRAPH FUNCTIONS
-    void insertVertex(string airportCode);
-    void insertEdge(string firstAirport, string secondAirport, Edge edgeToInsert);
-    list<Edge> incidentEdges(string airportCode);
-
-    
 private:
-
-
 
     //EDGE CLASS
     class Edge
@@ -53,5 +41,12 @@ private:
 
     //PRIVATE VARIABLES USED FOR THE GRAPH CLASS
     unordered_map<string, list<Edge>> graphMap;
-
+    
+public:
+    Graph(string routesFileName, string airportFileName); //Constructor
+    
+    //GRAPH FUNCTIONS
+    void insertVertex(string airportCode);
+    void insertEdge(string firstAirport, string secondAirport, Edge edgeToInsert);
+    list<Edge> incidentEdges(string airportCode);
 };
