@@ -1,21 +1,54 @@
 #include "graph.h"
 
-Graph::Edge::Edge(string startAirport, string endAirport, string airlineCode) {
+//GRAPH PUBLIC FUNCTIONS
+void Graph::insertVertex(string airportCode)
+{
+    //Check if Vertex has already been added
+    if(graphMap.find(airportCode) != graphMap.end())
+    {
+        return;
+    }
+
+    //Insert airportCode to graphMap with empty adjacency linked list
+    list<Edge> newEdgeList;
+    graphMap.insert({airportCode, newEdgeList});
+}
+
+void Graph::insertEdge(string firstAirport, string secondAirport, Edge edgeToInsert)
+{
+    //**Note: Assumes no duplication of routes and assumes that firstAirport and secondAirport exists
+    graphMap[firstAirport].push_back(edgeToInsert);
+    graphMap[secondAirport].push_back(edgeToInsert);
+}
+list<Edge> Graph::incidentEdges(string airportCode)
+{
+    return graphMap[airportCode];
+}
+
+
+
+Graph::Edge::Edge(string startAirport, string endAirport, string airlineCode)
+{
     this->startAirport = startAirport;
     this->endAirport = endAirport;
     this->airlineCode = airlineCode;
 }
 
-Graph::Graph(string fileName, string airportFile)
+//GRAPH CLASS CONSTRUCTOR
+//Parameters:
+//1. String of the routes text file name
+//2. String of the airport text file name
+Graph::Graph(string routesFileName, string airportFileName)
 {
-    translateDataToGraph(fileName, airportFile);
+    translateDataToGraph(routesFileName, airportFileName);
 }
 
+//HELPER FUNCTION FOR CONSTRUCTOR TO CONVERT THE ROUTES AND AIRPORT FILES TO A GRAPH
 void Graph::translateDataToGraph(string routeFile, string airportFile)
-{ 
-    // Populates startAirportToEdge:    
+{
+    // Populates startAirportToEdge:
     // Key: string of the starting airport
-    // Value: Vector of Edge (All nodes outgoing from the destination) 
+    // Value: Vector of Edge (All nodes outgoing from the destination)
     unordered_map<string, vector<Edge>> startAirportToEdge;
     mapStartAirportToEdge(routeFile, startAirportToEdge);
 
@@ -27,8 +60,8 @@ void Graph::translateDataToGraph(string routeFile, string airportFile)
     // Vector of edges of structs with start airport (IATA), end airport (IATA), alrine code
 }
 
-
-void Graph::mapStartAirportToEdge(string routeFile, unordered_map<string, vector<Edge>>& startAirportToEdge) {
+void Graph::mapStartAirportToEdge(string routeFile, unordered_map<string, vector<Edge>> &startAirportToEdge)
+{
     // From routes data
     int airlineCodeIdx = 0;
     int startAirIdx = 2;
@@ -36,18 +69,18 @@ void Graph::mapStartAirportToEdge(string routeFile, unordered_map<string, vector
 
     ifstream routeFileIF(routeFile);
     string routeFileLine;
-    while (getline(routeFileIF, routeFileLine)) 
+    while (getline(routeFileIF, routeFileLine))
     {
         stringstream lineSS(routeFileLine);
         string lineSect;
         // Split the line by splitting "," into parts with related information.
-        vector<string> lineSects;  
+        vector<string> lineSects;
 
-        while(std::getline(lineSS, lineSect, ','))
+        while (std::getline(lineSS, lineSect, ','))
         {
             lineSects.push_back(lineSect);
         }
-        
+
         // Populate startAirportToDests.
         string startAirport = lineSects[startAirIdx];
         string endAirport = lineSects[endAirIdx];
@@ -58,7 +91,8 @@ void Graph::mapStartAirportToEdge(string routeFile, unordered_map<string, vector
     }
 }
 
-void Graph::mapAirportsToLatLong(string airportFile) {
+void Graph::mapAirportsToLatLong(string airportFile)
+{
     // From airport data
     int IATAIdx = 4;
     int latIdx = 6;
@@ -66,14 +100,14 @@ void Graph::mapAirportsToLatLong(string airportFile) {
 
     ifstream airportFileIF(airportFile);
     string airportFileLine;
-    while (getline(airportFileIF, airportFileLine)) 
+    while (getline(airportFileIF, airportFileLine))
     {
         stringstream lineSS(airportFileLine);
         string lineSect;
         // Split the line by , into parts with related information.
-        vector<string> lineSects;  
+        vector<string> lineSects;
 
-        while(std::getline(lineSS, lineSect, ','))
+        while (std::getline(lineSS, lineSect, ','))
         {
             lineSects.push_back(lineSect);
         }
