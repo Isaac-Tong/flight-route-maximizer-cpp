@@ -1,72 +1,32 @@
 #include "graph.h"
 
-//GRAPH PUBLIC FUNCTIONS
-void Graph::insertVertex(string airportCode)
-{
-    //Check if Vertex has already been added
-    if(graphMap.find(airportCode) != graphMap.end())
-    {
-        return;
-    }
-
-    //Insert airportCode to graphMap with empty adjacency linked list
-    list<Edge> newEdgeList;
-    graphMap.insert({airportCode, newEdgeList});
-}
-
-void Graph::insertEdge(string firstAirport, string secondAirport, Edge edgeToInsert)
-{
-    //**Note: Assumes no duplication of routes and assumes that firstAirport and secondAirport exists
-    graphMap[firstAirport].push_back(edgeToInsert);
-    graphMap[secondAirport].push_back(edgeToInsert);
-}
-list<Edge> Graph::incidentEdges(string airportCode)
-{
-    return graphMap[airportCode];
-}
-
-
-
-Graph::Edge::Edge(string startAirport, string endAirport, string airlineCode)
+// EDGE CLASS CONSTRUCTOR
+Graph::Edge::Edge(string startAirport, string endAirport, string airlineCode, int distance)
 {
     this->startAirport = startAirport;
     this->endAirport = endAirport;
     this->airlineCode = airlineCode;
+    this->weight = distance;
 }
 
-//GRAPH CLASS CONSTRUCTOR
-//Parameters:
-//1. String of the routes text file name
-//2. String of the airport text file name
+// GRAPH CLASS CONSTRUCTOR
 Graph::Graph(string routesFileName, string airportFileName)
 {
-    translateDataToGraph(routesFileName, airportFileName);
-}
-
-//HELPER FUNCTION FOR CONSTRUCTOR TO CONVERT THE ROUTES AND AIRPORT FILES TO A GRAPH
-void Graph::translateDataToGraph(string routeFile, string airportFile)
-{
-    // Populates startAirportToEdge:
-    // Key: string of the starting airport
-    // Value: Vector of Edge (All nodes outgoing from the destination)
-    unordered_map<string, vector<Edge>> startAirportToEdge;
-    mapStartAirportToEdge(routeFile, startAirportToEdge);
-
     // Populates airports:
-    // Key: String of the airport
-    // Value: Struct for the longitude and latitude of the airport
-    mapAirportsToLatLong(airportFile);
+    mapAirportsToLatLong(airportFileName);
 
-    // Vector of edges of structs with start airport (IATA), end airport (IATA), alrine code
+    // Populates graphMap:
+    mapStartAirportToEdge(routesFileName);
 }
 
-void Graph::mapStartAirportToEdge(string routeFile, unordered_map<string, vector<Edge>> &startAirportToEdge)
+void Graph::mapStartAirportToEdge(string routeFile)
 {
-    // From routes data
+    // Indexes per line sepeof information, separated by commas, of OpenFlights routes dataset
     int airlineCodeIdx = 0;
     int startAirIdx = 2;
     int endAirIdx = 4;
 
+    // Process the routes dataset line by line
     ifstream routeFileIF(routeFile);
     string routeFileLine;
     while (getline(routeFileIF, routeFileLine))
@@ -85,15 +45,31 @@ void Graph::mapStartAirportToEdge(string routeFile, unordered_map<string, vector
         string startAirport = lineSects[startAirIdx];
         string endAirport = lineSects[endAirIdx];
         string airlineCode = lineSects[airlineCodeIdx];
-        Edge edge(startAirport, endAirport, airlineCode);
-
-        startAirportToEdge[startAirport].push_back(edge);
+        Edge newEdge(startAirport, endAirport, airlineCode, weight(startAirport, endAirport));
+        graphEdges[startAirport].push_back(newEdge);
     }
 }
 
+double Graph::weight(string firstAirport, string secondAirport)
+{
+    //Calculate distance using Haversine's formula
+
+    int r = 6371; //Earth's radius in KM
+
+    //Convert the two airport's lattiude and longitude radians
+    double firstLat = (airportsMap[firstAirport].lat) * (PI / 180);
+    double firstLon = (airportsMap[firstAirport].lon) * (PI / 180);
+    double secondLat = (airportsMap[secondAirport].lat) * (PI / 180);
+    double secondLon = (airportsMap[secondAirport].lon) * (PI / 180);
+
+    double distance = 2 * r * asin(sqrt(pow(sin((secondLat - firstLat) / 2), 2) + (cos(secondLat) * cos(firstLat) * pow(sin((secondLon - firstLon) / 2), 2))));
+    return distance;
+}
+
+// Function maps an airport to a struct of its lattitude and longitude.
 void Graph::mapAirportsToLatLong(string airportFile)
 {
-    // From airport data
+    // Indexes per line of information, separated by commas, of OpenFlights airport dataset
     int IATAIdx = 4;
     int latIdx = 6;
     int lonIdx = 7;
@@ -112,12 +88,65 @@ void Graph::mapAirportsToLatLong(string airportFile)
             lineSects.push_back(lineSect);
         }
 
-        // populates airports unordered_map.
-        string IATA = lineSects[IATAIdx];
-        string lat = lineSects[latIdx];
-        string lon = lineSects[lonIdx];
+        string IATA = lineSects[IATAIdx]; // Extract ITIA code of the airport
+        string lat = lineSects[latIdx];   // Extract lattitude of the airport
+        string lon = lineSects[lonIdx];   // Extract the longitude of the airport
 
-        airports[IATA].lat = stod(lat);
-        airports[IATA].lon = stod(lon);
+        // Populates the airportMap
+        airportsMap[IATA].lat = stod(lat);
+        airportsMap[IATA].lon = stod(lon);
     }
 }
+
+void Graph::printGraph()
+{
+    cout << "GRAPH" << endl;
+    cout << "..................." << endl;
+    for (auto it = graphEdges.begin(); it != graphEdges.end(); ++it)
+    {
+        cout << "Airport: " << it->first << endl;
+        cout << "Incident Edges:" << endl;
+        for (int i = 0; i < (it->second).size(); ++i)
+        {
+            cout << "Incident Airport: " << (it->second)[i].endAirport << " Airline Code: " << (it->second)[i].airlineCode << " Weight: " << (it->second)[i].weight << endl; 
+        }
+        cout << endl;
+    }
+    cout << "..................." << endl;
+}
+
+void Graph::printAirports()
+{
+    cout << "LIST OF AIRPORTS" << endl;
+    cout << "..................." << endl;
+    for (auto it = airportsMap.begin(); it != airportsMap.end(); ++it)
+    {
+        cout << "Airport: " << it->first << " Lattitude: " << (it->second).lat << " Longitude" << (it->second).lon << endl;
+    }
+    cout << "..................." << endl;
+}
+
+// //GRAPH PUBLIC FUNCTIONS
+// void Graph::insertVertex(string airportCode)
+// {
+//     //Check if Vertex has already been added
+//     if(graphMap.find(airportCode) != graphMap.end())
+//     {
+//         return;
+//     }
+
+//     //Insert airportCode to graphMap with empty adjacency linked list
+//     list<Edge> newEdgeList;
+//     graphMap.insert({airportCode, newEdgeList});
+// }
+
+// void Graph::insertEdge(string firstAirport, string secondAirport, Edge edgeToInsert)
+// {
+//     //**Note: Assumes no duplication of routes and assumes that firstAirport and secondAirport exists
+//     graphMap[firstAirport].push_back(edgeToInsert);
+//     graphMap[secondAirport].push_back(edgeToInsert);
+// }
+// list<Edge> Graph::incidentEdges(string airportCode)
+// {
+//     return graphMap[airportCode];
+// }
