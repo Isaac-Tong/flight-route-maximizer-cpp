@@ -32,10 +32,6 @@ private:
         double lon; // longitude
     };
 
-    // Getters to attain graph and airport to coordinate mapping
-    unordered_map<string, LatLong> getAirportsMap();
-    unordered_map<string, vector<Edge>> getGraphEdges();
-
     // Helper functions for constructor.
     void mapStartAirportToEdge(string routeFile);
     void mapAirportsToLatLong(string airportFile);
@@ -52,6 +48,11 @@ public:
     Graph(string routesFileName, string airportFileName);
     void printGraph();
     void printAirports();
+    
+    // Getters to attain graph and airport to coordinate mapping
+    unordered_map<string, LatLong> getAirportsMap();
+    unordered_map<string, vector<Edge>> getGraphEdges();
+
 
     // //GRAPH FUNCTIONS
     // void insertVertex(string airportCode);
