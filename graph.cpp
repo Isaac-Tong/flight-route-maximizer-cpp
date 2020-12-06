@@ -93,7 +93,7 @@ void Graph::mapAirportsToLatLong(string airportFile)
         string lon = lineSects[lonIdx];   // Extract the longitude of the airport
 
         //Since some IATA codes are unknown, skip airports which have unknown IATA codes.
-        if(IATA.size() < 3)
+        if (IATA.size() < 3)
         {
             continue;
         }
@@ -168,10 +168,53 @@ void Graph::printAirports()
 //     return graphMap[airportCode];
 // }
 
-unordered_map<string, Graph::LatLong> Graph::getAirportsMap() {
+unordered_map<string, Graph::LatLong> Graph::getAirportsMap()
+{
     return airportsMap;
 }
 
-unordered_map<string, vector<Graph::Edge>> Graph::getGraphEdges() {
+unordered_map<string, vector<Graph::Edge>> Graph::getGraphEdges()
+{
     return graphEdges;
+}
+
+void Graph::printProjection()
+{
+    //HEATHROW AIPORT LONGITUDE AND LATTITUDE TEST
+    double lat = 51.4700;
+    double lon = -0.4543;
+
+    //Height and width of the world map
+    double height = 2056;
+    double width = 2056;
+
+    double x = (lon + 180) * (width / 360);
+    double y = (height / 2) - ((width * log(tan((PI / 4) + ((lat * (PI / 180)) / 2)))) / (2 * PI));
+
+    //Create a PNG image based on src/worldmap.png
+    cs225::PNG worldMap;
+    worldMap.readFromFile("./src/mercator.png");
+
+    for (int i = 0; i < (int)worldMap.height(); ++i)
+    {
+        for (int j = 0; j < 5; ++j)
+        {
+            cs225::HSLAPixel &heathrowPixel = worldMap.getPixel(x + j, i);
+            heathrowPixel.l = 0;
+        }
+    }
+
+    for (int i = 0; i < (int)worldMap.width(); ++i)
+    {
+        for (int j = 0; j < 5; ++j)
+        {
+            cs225::HSLAPixel &heathrowPixel = worldMap.getPixel(i, y + j);
+            heathrowPixel.l = 0;
+        }
+    }
+
+    cout << x << " y " << y << endl;
+
+    //Test output
+    worldMap.writeToFile("heathrow.png");
 }

@@ -6,7 +6,7 @@
 #include <vector>
 #include <cmath>
 #include <iostream>
-
+#include "cs225/PNG.h"
 #define PI 3.14159265358979323846
 
 #pragma once
@@ -52,6 +52,8 @@ public:
     // Getters to attain graph and airport to coordinate mapping
     unordered_map<string, LatLong> getAirportsMap();
     unordered_map<string, vector<Edge>> getGraphEdges();
+    void printProjection();
+
 
 
     // //GRAPH FUNCTIONS

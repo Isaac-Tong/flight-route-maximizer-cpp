@@ -8,8 +8,10 @@ int main(int argc, char *argv[]) {
     string routesFile = "./dataset/routes_dataset.txt";
     Graph newGraph(routesFile, airportFile);
 
-    newGraph.printAirports();
-    newGraph.printGraph();
+    // newGraph.printAirports();
+    // newGraph.printGraph();
+
+    newGraph.printProjection();
 
     return 0;
 }
