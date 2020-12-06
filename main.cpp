@@ -1,4 +1,5 @@
 #include "graph.h"
+#include "flightsVizualizer.h"
 #include <string>
 
 using namespace std;
@@ -11,7 +12,8 @@ int main(int argc, char *argv[]) {
     // newGraph.printAirports();
     // newGraph.printGraph();
 
-    newGraph.printProjection();
+    flightsVizualizer vizualizer;
+    vizualizer.printProjection();
 
     return 0;
 }
