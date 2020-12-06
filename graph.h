@@ -52,9 +52,6 @@ public:
     // Getters to attain graph and airport to coordinate mapping
     unordered_map<string, LatLong> getAirportsMap();
     unordered_map<string, vector<Edge>> getGraphEdges();
-    void printProjection();
-
-
 
     // //GRAPH FUNCTIONS
     // void insertVertex(string airportCode);
