@@ -80,6 +80,7 @@ double Graph::weight(string firstAirport, string secondAirport)
 void Graph::mapAirportsToLatLong(string airportFile)
 {
     // Indexes per line of information, separated by commas, of OpenFlights airport dataset
+    int transportTypeIdx = 12; // Transport type may not be airport.
     int IATAIdx = 4;
     int latIdx = 6;
     int lonIdx = 7;
@@ -98,12 +99,13 @@ void Graph::mapAirportsToLatLong(string airportFile)
             lineSects.push_back(lineSect);
         }
 
-        string IATA = lineSects[IATAIdx]; // Extract ITIA code of the airport
+        string IATA = lineSects[IATAIdx]; // Extract IATA code of the airport
         string lat = lineSects[latIdx];   // Extract lattitude of the airport
         string lon = lineSects[lonIdx];   // Extract the longitude of the airport
 
         //Since some IATA codes are unknown, skip airports which have unknown IATA codes.
-        if (IATA.size() < 3)
+        //Make sure the transport type is airport.
+        if (IATA.size() < 3 || lineSects[transportTypeIdx] != "airport")
         {
             continue;
         }
