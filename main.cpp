@@ -12,7 +12,10 @@ int main(int argc, char *argv[]) {
     // newGraph.printAirports();
     // newGraph.printGraph();
 
-    flightsVizualizer vizualizer;
+    flightsVizualizer vizualizer(newGraph);
+    double lat = 51.4700;
+    double lon = -0.4543;
+    vizualizer.markAirport(lat, lon);
     vizualizer.printProjection();
 
     return 0;

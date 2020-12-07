@@ -8,6 +8,10 @@ Graph::Edge::Edge(string startAirport, string endAirport, string airlineCode, in
     this->airlineCode = airlineCode;
     this->weight = distance;
 }
+Graph::Graph()
+{
+
+}
 
 // GRAPH CLASS CONSTRUCTOR
 Graph::Graph(string routesFileName, string airportFileName)
@@ -17,6 +21,12 @@ Graph::Graph(string routesFileName, string airportFileName)
     mapAirportsToLatLong(airportFileName);
     // // Populates graphMap:
     mapStartAirportToEdge(routesFileName);
+}
+
+Graph::Graph(Graph& other)
+{
+    this->airportsMap = other.getAirportsMap();
+    this->graphEdges = other.getGraphEdges();
 }
 
 void Graph::mapStartAirportToEdge(string routeFile)
@@ -177,3 +187,5 @@ unordered_map<string, vector<Graph::Edge>> Graph::getGraphEdges()
 {
     return graphEdges;
 }
+
+
