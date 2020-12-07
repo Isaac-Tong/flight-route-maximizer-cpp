@@ -1,6 +1,6 @@
 # Makefile modified from lab_intro's Makefile
 EXENAME = flightsOpt
-OBJS = main.o graph.o PNG.o HSLAPixel.o lodepng.o
+OBJS = main.o graph.o flightsVizualizer.o PNG.o HSLAPixel.o lodepng.o
 
 CXX = clang++
 CXXFLAGS = $(CS225) -std=c++1y -stdlib=libc++ -c -g -O0 -Wall -Wextra -pedantic
@@ -33,11 +33,14 @@ output_msg: ; $(CLANG_VERSION_MSG)
 $(EXENAME) : output_msg $(OBJS)
 	$(LD) $(OBJS) $(LDFLAGS) -o $(EXENAME)
 
-main.o : main.cpp graph.h
+main.o : main.cpp graph.h flightsVizualizer.h
 	$(CXX) $(CXXFLAGS) main.cpp
 
 graph.o : graph.cpp
 	$(CXX) $(CXXFLAGS) graph.cpp
+
+flightsVizualizer.o : flightsVizualizer.cpp
+	$(CXX) $(CXXFLAGS) flightsVizualizer.cpp
 
 lodepng.o : cs225/lodepng/lodepng.cpp cs225/lodepng/lodepng.h
 	$(CXX) $(CXXFLAGS) cs225/lodepng/lodepng.cpp
