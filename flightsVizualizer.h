@@ -16,7 +16,7 @@ public:
     //Outputs the worldMap as a PNG
     void printProjection();
 
-    void drawConnection(Graph::LatLong airport1, Graph::LatLong airport2);
+    void drawConnection(int x1, int y1, int x2, int y2);
 
 private:
     Graph graph;

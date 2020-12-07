@@ -7,9 +7,19 @@ flightsVizualizer::flightsVizualizer(Graph graph)
     this->worldMap.readFromFile("./src/mercator.png");
 }
 
-void flightsVizualizer::drawConnection(Graph::LatLong airport1, Graph::LatLong airport2)
+void flightsVizualizer::drawConnection(int x1, int y1, int x2, int y2)
 {
+    //Calculate slope
+    double slope = (y2 - y1) / (x2 - x1);
 
+    for (int i = x1; i < x2; ++i)
+    {
+        double yCoordinate = slope * (i - x1) + y1;
+        cs225::HSLAPixel &targetPixel = worldMap.getPixel(i, yCoordinate);
+        targetPixel.l = 0.5;
+        targetPixel.h = 35;
+        targetPixel.s = 1;
+    }
 }
 
 void flightsVizualizer::markAirport(double lat, double lon)
@@ -23,11 +33,11 @@ void flightsVizualizer::markAirport(double lat, double lon)
 
     cout << "x=" << x << "y=" << y;
 
-    for(int i = -3; i < 3; ++i)
+    for (int i = -3; i < 3; ++i)
     {
-        for(int j = -3; j < 3; ++j)
+        for (int j = -3; j < 3; ++j)
         {
-            cs225::HSLAPixel& targetPixel = worldMap.getPixel(x + i, y + j);
+            cs225::HSLAPixel &targetPixel = worldMap.getPixel(x + i, y + j);
             targetPixel.l = 0.5;
             targetPixel.h = 35;
             targetPixel.s = 1;
@@ -37,22 +47,22 @@ void flightsVizualizer::markAirport(double lat, double lon)
 
 void flightsVizualizer::printProjection()
 {
-    unordered_map<string, Graph::LatLong> airportsMap = this->graph.getAirportsMap();
+    // unordered_map<string, Graph::LatLong> airportsMap = this->graph.getAirportsMap();
 
-    int counter = 0;
-    auto iterator = airportsMap.begin();
-    while(counter < 100)
-    {
-        double lat = (iterator->second).lat;
-        double lon = (iterator->second).lon;
+    // int counter = 0;
+    // auto iterator = airportsMap.begin();
+    // while (counter < 100)
+    // {
+    //     double lat = (iterator->second).lat;
+    //     double lon = (iterator->second).lon;
 
-        // cout << iterator->first << "Long Lat " << (iterator->second).lat << (iterator->second).lon << endl;
-        cout << iterator->first; 
-        markAirport(lat, lon);
-        cout << "lat=" << lat << "long=" << lon << endl;
-        iterator++;
-        counter++;
-    }
+    //     // cout << iterator->first << "Long Lat " << (iterator->second).lat << (iterator->second).lon << endl;
+    //     cout << iterator->first;
+    //     markAirport(lat, lon);
+    //     cout << "lat=" << lat << "long=" << lon << endl;
+    //     iterator++;
+    //     counter++;
+    // }
 
     worldMap.writeToFile("heathrow.png");
 }
