@@ -18,7 +18,7 @@ public:
     void printProjection();
 
     void drawConnection(double x1, double y1, double x2, double y2, string airportS, string airportE);
-
+    
     double translateXCoordinate(double lon);
     double translateYCoordinate(double lat);
 

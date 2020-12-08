@@ -150,6 +150,40 @@ void Graph::printAirports()
     cout << "..................." << endl;
 }
 
+bool Graph::BFS(string startingAirport, string destinationAirport) {
+    unordered_map<string, LatLong> validAirportName = getAirportsMap();
+    if (validAirportName.find(startingAirport) == validAirportName.end() || validAirportName.find(destinationAirport) == validAirportName.end()) {
+        return false;
+    }
+    queue<string> queue;
+    queue.push(startingAirport);
+    unordered_map<string, int> redundantDestAirport;
+    bool toPop = true;
+    while (!queue.empty()) {
+        toPop = true;
+        for (auto it = graphEdges.begin(); it != graphEdges.end(); ++it) {
+            if (it->first == queue.front()) {
+                queue.pop();
+                toPop = false;
+                for (size_t i = 0; i < (it->second).size(); ++i) {
+                    if ((it->second)[i].endAirport == destinationAirport) {
+                        return true;
+                    }
+                    //If the destination airport does not exist in map, add to map and queue of airports that need to be visited.
+                    if (redundantDestAirport.find((it->second)[i].endAirport) == redundantDestAirport.end()) {
+                        queue.push((it->second)[i].endAirport); 
+                        redundantDestAirport.insert(make_pair((it->second)[i].endAirport, 1));
+                    } 
+                }
+            } 
+        }
+        if (toPop == true) {
+            queue.pop();
+        }
+    }
+    return false;
+}
+
 // //GRAPH PUBLIC FUNCTIONS
 // void Graph::insertVertex(string airportCode)
 // {
