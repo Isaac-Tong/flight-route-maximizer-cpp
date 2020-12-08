@@ -16,7 +16,7 @@ public:
     //Outputs the worldMap as a PNG
     void printProjection();
 
-    void drawConnection(int x1, int y1, int x2, int y2);
+    void drawConnection(double x1, double y1, double x2, double y2);
 
 private:
     Graph graph;

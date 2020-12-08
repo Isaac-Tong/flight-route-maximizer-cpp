@@ -7,15 +7,15 @@ flightsVizualizer::flightsVizualizer(Graph graph)
     this->worldMap.readFromFile("./src/mercator.png");
 }
 
-void flightsVizualizer::drawConnection(int x1, int y1, int x2, int y2)
+void flightsVizualizer::drawConnection(double x1, double y1, double x2, double y2)
 {
     //Calculate slope
     double slope = (y2 - y1) / (x2 - x1);
 
-    for (int i = x1; i < x2; ++i)
+    for (int i = x1; i < x2; i++)
     {
-        double yCoordinate = slope * (i - x1) + y1;
-        cs225::HSLAPixel &targetPixel = worldMap.getPixel(i, yCoordinate);
+        double yCoordinate = (slope * (i - x1)) + y1;
+        cs225::HSLAPixel &targetPixel = worldMap.getPixel(i, (int)yCoordinate);
         targetPixel.l = 0.5;
         targetPixel.h = 35;
         targetPixel.s = 1;
@@ -30,9 +30,7 @@ void flightsVizualizer::markAirport(double lat, double lon)
     //Calculate x and y of the airport on the worldMap
     double x = (lon + 180) * (length / 360);
     double y = (length / 2) - ((length * log(tan((PI / 4) + ((lat * (PI / 180)) / 2)))) / (2 * PI));
-
-    cout << "x=" << x << "y=" << y;
-
+    
     for (int i = -3; i < 3; ++i)
     {
         for (int j = -3; j < 3; ++j)

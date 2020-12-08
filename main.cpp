@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
     Graph newGraph(routesFile, airportFile);
 
     newGraph.printAirports();
-    // newGraph.printGraph();
+    newGraph.printGraph();
 
     flightsVizualizer vizualizer(newGraph);
     double lat1 = 51.4700;
@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
     double lon2 = -87.9073;
     vizualizer.markAirport(lat2, lon2);
 
-    vizualizer.drawConnection(1531.54, 764.163, 1026.4, 684.681);
+    vizualizer.drawConnection(526.0, 764.0, 1026.0, 684.0);
     vizualizer.printProjection();
 
     return 0;
