@@ -16,6 +16,8 @@ Graph::Graph()
 // GRAPH CLASS CONSTRUCTOR
 Graph::Graph(string routesFileName, string airportFileName)
 {
+    // Note that the format of the graph dataset was modified as to not have quotes and have commas only to indicate
+    // a change in the field of the data (not within an airport name for example).
 
     // Populates airports:
     mapAirportsToLatLong(airportFileName);
