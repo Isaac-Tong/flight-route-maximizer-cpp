@@ -32,13 +32,12 @@ public:
         double lat; // latitude
         double lon; // longitude
     };
-    //Constructor. Takes in the name of the routes file and the name of the airport file
     Graph(string routesFileName, string airportFileName);
-    //Copy constructor
     Graph(Graph &other);
     Graph();
     void printGraph();
     void printAirports();
+    // BFS to see if the destination airport is reachable from the starting airport.
     bool BFS(string startingAirport, string destinationAirport);
     // Getters to attain graph and airport to coordinate mapping
     unordered_map<string, LatLong> getAirportsMap();
