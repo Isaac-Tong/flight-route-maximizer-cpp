@@ -21,7 +21,7 @@ Graph::Graph(string routesFileName, string airportFileName)
 
     // Populates airports:
     mapAirportsToLatLong(airportFileName);
-    // // Populates graphMap:
+    // Populates graphMap:
     mapStartAirportToEdge(routesFileName);
 }
 
@@ -82,10 +82,10 @@ double Graph::weight(string firstAirport, string secondAirport)
 void Graph::mapAirportsToLatLong(string airportFile)
 {
     // Indexes per line of information, separated by commas, of OpenFlights airport dataset
-    int transportTypeIdx = 12; // Transport type may not be airport.
-    int IATAIdx = 4;
-    int latIdx = 6;
-    int lonIdx = 7;
+    int transportTypeIdx = 3; // Transport type may not be airport.
+    int IATAIdx = 0;
+    int latIdx = 1;
+    int lonIdx = 2;
 
     ifstream airportFileIF(airportFile);
     string airportFileLine;
@@ -107,23 +107,16 @@ void Graph::mapAirportsToLatLong(string airportFile)
 
         //Since some IATA codes are unknown, skip airports which have unknown IATA codes.
         //Make sure the transport type is airport.
-        if (IATA.size() < 3 || lineSects[transportTypeIdx] != "airport")
+        string transportName = lineSects[transportTypeIdx];
+
+        if (IATA.size() < 3 || transportName.substr(0, 7) != "airport")
         {
             continue;
         }
         // Populates the airportMap
-        if ((lat[1] >= '0' && lat[1] <= '9') && (lon[1] >= '0' && lon[1] <= '9'))
-        {
-            airportsMap[IATA].lat = stod(lat);
-            airportsMap[IATA].lon = stod(lon);
-        }
-        else
-        {
-            lat = lineSects[latIdx + 1];
-            lon = lineSects[lonIdx + 1];
-            airportsMap[IATA].lat = stod(lat);
-            airportsMap[IATA].lon = stod(lon);
-        }
+    
+        airportsMap[IATA].lat = stod(lat);
+        airportsMap[IATA].lon = stod(lon);
     }
 }
 
