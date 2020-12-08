@@ -7,6 +7,7 @@
 #include <cmath>
 #include <iostream>
 #include "cs225/PNG.h"
+#include <queue>
 #define PI 3.14159265358979323846
 
 #pragma once
@@ -38,7 +39,7 @@ public:
     Graph();
     void printGraph();
     void printAirports();
-
+    bool BFS(string startingAirport, string destinationAirport);
     // Getters to attain graph and airport to coordinate mapping
     unordered_map<string, LatLong> getAirportsMap();
     unordered_map<string, vector<Edge>> getGraphEdges();

@@ -4,13 +4,26 @@
 
 using namespace std;
 int main(int argc, char *argv[]) {
-    string airportFile = "./dataset/airports_extended_formatted.txt";
-    // string airportFile = "./dataset/test.txt";
+    //string airportFile = "./dataset/airports_extended_formatted.txt";
+    string airportFile = "./dataset/test.txt";
     string routesFile = "./dataset/routes_dataset.txt";
+    //string routesFile = "./dataset/routes_extended.txt";
     Graph newGraph(routesFile, airportFile);
 
-    newGraph.printAirports();
-    // newGraph.printGraph();
+    //newGraph.printAirports();
+    //newGraph.printGraph();
+
+    //Should find BOY -> ABJ -> ALG
+    //Should not find XYZ to CMI (must uncomment and use extended version of airportFile and routesFile)
+    //Should find MEH -> ALF -> OSL -> VXO
+    string start = "XYZ";
+    string end  = "CMI";
+    if (newGraph.BFS(start, end)) {
+        cout << "A path between " + start + " and " + end + " exists" << endl;
+    } else {
+        cout << "A path between " + start + " and " + end + " does not exist" << endl;
+    }
+
 
     // flightsVizualizer vizualizer(newGraph);
     // double lat1 = 51.4700;
