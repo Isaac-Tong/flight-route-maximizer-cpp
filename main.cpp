@@ -3,14 +3,15 @@
 #include <string>
 
 using namespace std;
-int main(int argc, char *argv[]) {
-    string airportFile = "./dataset/airports_extended_formatted.txt";
-    // string airportFile = "./dataset/test.txt";
-    string routesFile = "./dataset/routes_dataset.txt";
-    Graph newGraph(routesFile, airportFile);
+int main(int argc, char *argv[])
+{
+    // string airportFile = "./dataset/airports_extended_formatted.txt";
+    // // string airportFile = "./dataset/test.txt";
+    // string routesFile = "./dataset/routes_dataset.txt";
+    // Graph newGraph(routesFile, airportFile);
 
-    newGraph.printAirports();
-    // newGraph.printGraph();
+    // newGraph.printAirports();
+    // // newGraph.printGraph();
 
     // flightsVizualizer vizualizer(newGraph);
     // double lat1 = 51.4700;
@@ -23,6 +24,14 @@ int main(int argc, char *argv[]) {
 
     // vizualizer.drawConnection(526.0, 764.0, 1026.0, 684.0);
     // vizualizer.printProjection();
+
+    //TEST FOR PRINT PROJECTION
+    string airportFile = "./dataset/trimmed_dataset/airports_extended_formatted_trimmed.txt";
+    string routesFile = "./dataset/trimmed_dataset/routes_dataset_trimmed.txt";
+    Graph newGraph(routesFile, airportFile);
+
+    flightsVizualizer vizualizer(newGraph);
+    vizualizer.printProjection();
 
     return 0;
 }

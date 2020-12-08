@@ -1,5 +1,6 @@
 #include "graph.h"
 #include "cs225/PNG.h"
+#include <algorithm> 
 
 #pragma once
 
@@ -16,7 +17,10 @@ public:
     //Outputs the worldMap as a PNG
     void printProjection();
 
-    void drawConnection(double x1, double y1, double x2, double y2);
+    void drawConnection(double x1, double y1, double x2, double y2, string airportS, string airportE);
+
+    double translateXCoordinate(double lon);
+    double translateYCoordinate(double lat);
 
 private:
     Graph graph;
