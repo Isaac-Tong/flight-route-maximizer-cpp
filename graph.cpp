@@ -185,6 +185,49 @@ bool Graph::BFS(string startingAirport, string destinationAirport) {
     return false;
 }
 
+
+void Graph::Dijkstra(string start, string destination){
+    unordered_map<string, LatLong> validAirportName = getAirportsMap();
+    if (validAirportName.find(start) == validAirportName.end() || validAirportName.find(destination) == validAirportName.end()) {
+        return;
+    }
+    //need to check if valid
+    unordered_map<string, vector<Edge>> validGraphEdge = getGraphEdges();
+    if (validGraphEdge.find(start) == validGraphEdge.end() || validGraphEdge.find(destination) == validGraphEdge.end()) {
+        return;
+    }
+    if(Graph::BFS(start, destination) == false){
+        return;
+    }
+    priority_queue<string, int> pqueue;
+    queue<string> squeue;
+    int weight;
+    pqueue.push(start, weight);
+    bool Pop = true;
+    while (!pqueue.empty()) {
+        Pop = true;
+        for (auto it = graphEdges.begin(); it != graphEdges.end(); ++it) {
+            if (it->first == pqueue.front()) {
+                pqueue.pop();
+                Pop = false;
+                for (size_t i = 0; i < (it->second).size(); ++i) {
+                    if ((it->second)[i].endAirport == destination) {
+                        return;
+                    }
+                    if((it->second)[i].weight <= (it->first)[i].weight)){
+                        pqueue.push((it->second)[i].endAirport, (it->second)[i].weight);
+                    }
+                }
+            } 
+        }
+        if (Pop == true) {
+            pqueue.pop();
+        }
+    }
+    return;
+}
+
+
 // //GRAPH PUBLIC FUNCTIONS
 // void Graph::insertVertex(string airportCode)
 // {
