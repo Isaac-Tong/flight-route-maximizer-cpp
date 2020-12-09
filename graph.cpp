@@ -8,6 +8,7 @@ Graph::Edge::Edge(string startAirport, string endAirport, string airlineCode, in
     this->airlineCode = airlineCode;
     this->weight = distance;
 }
+
 Graph::Graph()
 {
 
