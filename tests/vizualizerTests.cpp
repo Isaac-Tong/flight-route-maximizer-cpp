@@ -224,7 +224,6 @@ TEST_CASE("Correctly Outputs Vertical Alignment of Airports", "[vizualizer]")
 
     for (double i = translateYCoordinate(DENlat); i < translateYCoordinate(YQRlat); ++i)
     {
-        cout << "rpinted" << endl;
         cs225::HSLAPixel &targetPixel = expected.getPixel(translateXCoordinate(DENlon), i);
         targetPixel.l = 0.5;
         targetPixel.h = 35;

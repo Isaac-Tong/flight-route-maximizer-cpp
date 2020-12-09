@@ -41,12 +41,6 @@ void flightsVizualizer::drawConnection(double x1, double y1, double x2, double y
             targetPixel.l = 0.5;
             targetPixel.h = 35;
             targetPixel.s = 1;
-
-            // if (i > 2057 || yCoordinate > 2057)
-            // {
-            //     cout << " x1 "<< x1 << " y1 " << y1 << " x2 " << x2 << "y2" << y2 << airportS << airportE << endl;
-            //     continue;
-            // }
         }
     }
 }
