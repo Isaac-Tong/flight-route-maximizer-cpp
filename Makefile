@@ -1,7 +1,8 @@
 # Makefile modified from lab_intro's Makefile
 EXENAME = flightsOpt
 TEST = test
-OBJS = main.o graph.o flightsVizualizer.o PNG.o HSLAPixel.o lodepng.o catchmain.o bfsTests.o DijkstraTests.o graphTests.o vizualizerTests.o
+OBJS = main.o graph.o flightsVizualizer.o PNG.o HSLAPixel.o lodepng.o 
+TESTOBJS = catchmain.o bfsTests.o DijkstraTests.o graphTests.o vizualizerTests.o
 
 CXX = clang++
 CXXFLAGS = $(CS225) -std=c++1y -stdlib=libc++ -c -g -O0 -Wall -Wextra -pedantic
@@ -54,25 +55,22 @@ HSLAPixel.o : cs225/HSLAPixel.cpp cs225/HSLAPixel.h
 
 
 # Tests
-test: output_msg catchmain.o bfsTests.o DijkstraTests.o graphTests.o vizualizerTests.o PNG.o HSLAPixel.o lodepng.o graph.cpp flightsVizualizer.cpp
+test : output_msg catchmain.o bfsTests.o DijkstraTests.o graphTests.o vizualizerTests.o PNG.o HSLAPixel.o lodepng.o graph.cpp flightsVizualizer.cpp
 	$(LD) catchmain.o bfsTests.o DijkstraTests.o graphTests.o vizualizerTests.o PNG.o HSLAPixel.o lodepng.o graph.cpp flightsVizualizer.cpp $(LDFLAGS) -o $(TEST)
-
-#test: output_msg catch/catchmain.cpp tests/tests.cpp readFromFile.cpp
-#	$(LD) catch/catchmain.cpp tests/tests.cpp readFromFile.cpp $(LDFLAGS) -o test
 	
-catchmain.o: cs225/catch/catchmain.cpp cs225/catch/catch.hpp
+catchmain.o : cs225/catch/catchmain.cpp cs225/catch/catch.hpp 
 	$(CXX) $(CXXFLAGS) cs225/catch/catchmain.cpp
 
-bfsTests.o:tests/bfsTests.cpp
+bfsTests.o :tests/bfsTests.cpp
 	$(CXX) $(CXXFLAGS) tests/bfsTests.cpp
 
-DijkstraTests.o: tests/DijkstraTests.cpp
+DijkstraTests.o : tests/DijkstraTests.cpp
 	$(CXX) $(CXXFLAGS) tests/DijkstraTests.cpp
 
-graphTests.o: tests/graphTests.cpp
+graphTests.o : tests/graphTests.cpp
 	$(CXX) $(CXXFLAGS) tests/graphTests.cpp
 
-vizualizerTests.o: tests/vizualizerTests.cpp
+vizualizerTests.o : tests/vizualizerTests.cpp
 	$(CXX) $(CXXFLAGS) tests/vizualizerTests.cpp
 
 clean :
