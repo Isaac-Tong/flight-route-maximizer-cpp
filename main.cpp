@@ -5,13 +5,14 @@
 using namespace std;
 int main(int argc, char *argv[])
 {
-    // string airportFile = "./dataset/airports_extended_formatted.txt";
-    // // string airportFile = "./dataset/test.txt";
-    // string routesFile = "./dataset/routes_dataset.txt";
-    // Graph newGraph(routesFile, airportFile);
+    string airportFile = "./dataset/airports_dataset.txt";
+    //string airportFile = "./dataset/airports_extended_formatted.txt";
+    //string airportFile = "./dataset/test.txt";
+    string routesFile = "./dataset/routes_dataset.txt";
+    Graph newGraph(routesFile, airportFile);
 
     // newGraph.printAirports();
-    // // newGraph.printGraph();
+    //newGraph.printGraph();
 
     // flightsVizualizer vizualizer(newGraph);
     // double lat1 = 51.4700;
@@ -35,6 +36,7 @@ int main(int argc, char *argv[])
 
     // string airportFile = "./tests/sets_to_test/dijkstra_five_airports.txt";
     // string routesFile = "./tests/sets_to_test/dijksrta_five_routes.txt";
+    /*
     string airportFile = "./dataset/airports_extended_formatted.txt";
     string routesFile = "./dataset/trimmed_dataset/routes_dataset_trimmed.txt";
     Graph newGraph(routesFile, airportFile);
@@ -43,10 +45,24 @@ int main(int argc, char *argv[])
 
 
     cout << endl;
+    */
     // newGraph.printGraph();
 
     // flightsVizualizer vizualizer(newGraph);
     // vizualizer.printProjection();
+
+    //BFS Test
+
+    /*
+    string startingAirport = "CMI";
+    string endingAirport = "DEL";
+    if (newGraph.BFS(startingAirport, endingAirport)) {
+        cout << "A path betweeen " << startingAirport << " and " << endingAirport << " exists" << endl;
+    } else {
+        cout << "A path betweeen " << startingAirport << " and " << endingAirport << " does not exist" << endl;
+    }
+    */
+    
 
     return 0;
 }

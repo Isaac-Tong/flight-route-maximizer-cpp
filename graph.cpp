@@ -126,7 +126,7 @@ void Graph::printGraph()
     cout << "..................." << endl;
     for (auto it = graphEdges.begin(); it != graphEdges.end(); ++it)
     {
-        cout << "Airport: " << it->first << endl;
+        cout << "Starting Airport: " << it->first << endl;
         cout << "Incident Edges:" << endl;
         for (size_t i = 0; i < (it->second).size(); ++i)
         {
@@ -157,6 +157,9 @@ bool Graph::BFS(string startingAirport, string destinationAirport)
     {
         return false;
     }
+    ofstream bfsAirportsVisited;
+    bfsAirportsVisited.open("bfs_airports_visited.txt");
+    bfsAirportsVisited << "Start of BFS between " << startingAirport << " and " << destinationAirport << "\n";
     queue<string> queue;
     queue.push(startingAirport);
     unordered_map<string, int> redundantDestAirport;
@@ -168,12 +171,14 @@ bool Graph::BFS(string startingAirport, string destinationAirport)
         {
             if (it->first == queue.front())
             {
+                bfsAirportsVisited << queue.front() << "\n";
                 queue.pop();
                 toPop = false;
                 for (size_t i = 0; i < (it->second).size(); ++i)
                 {
                     if ((it->second)[i].endAirport == destinationAirport)
                     {
+                        bfsAirportsVisited << destinationAirport << "\n";
                         return true;
                     }
                     //If the destination airport does not exist in map, add to map and queue of airports that need to be visited.
@@ -187,6 +192,7 @@ bool Graph::BFS(string startingAirport, string destinationAirport)
         }
         if (toPop == true)
         {
+            bfsAirportsVisited << queue.front() << "\n";
             queue.pop();
         }
     }
