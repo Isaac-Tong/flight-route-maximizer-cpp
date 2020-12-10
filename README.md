@@ -16,17 +16,17 @@ https://openflights.org/data.html
 
 ### Installation
 1. Clone the repo
-* `https://github-dev.cs.illinois.edu/cs225-fa20/iia2-ericjin2-isaact2-pranshu3.git`
+  * `https://github-dev.cs.illinois.edu/cs225-fa20/iia2-ericjin2-isaact2-pranshu3.git`
 
 2. Fetch code
-* `git fetch relese`
-* `git merge release/FILE_NAME -m "Merging release repository"`
+  * `git fetch relese`
+  * `git merge release/FILE_NAME -m "Merging release repository"`
 
 3. Make and compile code
-* `make; make test`
+  * `make; make test`
 
 4. Test code
-* `./test`
+  * `./test`
 
 
 
