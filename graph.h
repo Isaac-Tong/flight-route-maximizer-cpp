@@ -8,6 +8,9 @@
 #include <iostream>
 #include "cs225/PNG.h"
 #include <queue>
+#include <utility>
+#include <limits>
+#include <functional>
 #define PI 3.14159265358979323846
 #define INF 999
 
@@ -41,7 +44,9 @@ public:
     // BFS to see if the destination airport is reachable from the starting airport.
     bool BFS(string startingAirport, string destinationAirport);
     // Dijkstra's algorithm to find the shortest path from the starting airport to the destination airport.
-    void Dijkstra(string start, string destination);
+    void Dijkstra(string startAirport, string targetAirport);
+    unordered_map<string, pair<int, string>> DijkstraHelper(string startAirport);
+
     // Getters to attain graph and airport to coordinate mapping
     unordered_map<string, LatLong> getAirportsMap();
     unordered_map<string, vector<Edge>> getGraphEdges();
@@ -50,12 +55,13 @@ public:
     // void insertVertex(string airportCode);
     // void insertEdge(string firstAirport, string secondAirport, Edge edgeToInsert);
     // vector<Edge> incidentEdges(string airportCode);
+    double weight(string firstAirport, string secondAirport);
     
 private:
     // Helper functions for constructor.
     void mapStartAirportToEdge(string routeFile);
     void mapAirportsToLatLong(string airportFile);
-    double weight(string firstAirport, string secondAirport);
+    
 
     // Maps IATA to Latitude and Longitude.
     unordered_map<string, LatLong> airportsMap;

@@ -25,13 +25,28 @@ int main(int argc, char *argv[])
     // vizualizer.drawConnection(526.0, 764.0, 1026.0, 684.0);
     // vizualizer.printProjection();
 
-    //TEST FOR PRINT PROJECTION
-    string airportFile = "./dataset/trimmed_dataset/airports_extended_formatted_trimmed.txt";
+    // //TEST FOR PRINT PROJECTION
+    // string airportFile = "./dataset/trimmed_dataset/airports_extended_formatted_trimmed.txt";
+    // string routesFile = "./dataset/trimmed_dataset/routes_dataset_trimmed.txt";
+    // Graph newGraph(routesFile, airportFile);
+
+    // newGraph.Dijkstra("");
+    
+
+    // string airportFile = "./tests/sets_to_test/dijkstra_five_airports.txt";
+    // string routesFile = "./tests/sets_to_test/dijksrta_five_routes.txt";
+    string airportFile = "./dataset/airports_extended_formatted.txt";
     string routesFile = "./dataset/trimmed_dataset/routes_dataset_trimmed.txt";
     Graph newGraph(routesFile, airportFile);
 
-    flightsVizualizer vizualizer(newGraph);
-    vizualizer.printProjection();
+    newGraph.Dijkstra("ORD", "PVG");
+
+
+    cout << endl;
+    // newGraph.printGraph();
+
+    // flightsVizualizer vizualizer(newGraph);
+    // vizualizer.printProjection();
 
     return 0;
 }

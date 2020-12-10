@@ -11,7 +11,6 @@ Graph::Edge::Edge(string startAirport, string endAirport, string airlineCode, in
 
 Graph::Graph()
 {
-
 }
 
 // GRAPH CLASS CONSTRUCTOR
@@ -26,7 +25,7 @@ Graph::Graph(string routesFileName, string airportFileName)
     mapStartAirportToEdge(routesFileName);
 }
 
-Graph::Graph(Graph& other)
+Graph::Graph(Graph &other)
 {
     this->airportsMap = other.getAirportsMap();
     this->graphEdges = other.getGraphEdges();
@@ -115,7 +114,7 @@ void Graph::mapAirportsToLatLong(string airportFile)
             continue;
         }
         // Populates the airportMap
-    
+
         airportsMap[IATA].lat = stod(lat);
         airportsMap[IATA].lon = stod(lon);
     }
@@ -151,84 +150,155 @@ void Graph::printAirports()
     cout << "..................." << endl;
 }
 
-bool Graph::BFS(string startingAirport, string destinationAirport) {
+bool Graph::BFS(string startingAirport, string destinationAirport)
+{
     unordered_map<string, LatLong> validAirportName = getAirportsMap();
-    if (validAirportName.find(startingAirport) == validAirportName.end() || validAirportName.find(destinationAirport) == validAirportName.end()) {
+    if (validAirportName.find(startingAirport) == validAirportName.end() || validAirportName.find(destinationAirport) == validAirportName.end())
+    {
         return false;
     }
     queue<string> queue;
     queue.push(startingAirport);
     unordered_map<string, int> redundantDestAirport;
     bool toPop = true;
-    while (!queue.empty()) {
+    while (!queue.empty())
+    {
         toPop = true;
-        for (auto it = graphEdges.begin(); it != graphEdges.end(); ++it) {
-            if (it->first == queue.front()) {
+        for (auto it = graphEdges.begin(); it != graphEdges.end(); ++it)
+        {
+            if (it->first == queue.front())
+            {
                 queue.pop();
                 toPop = false;
-                for (size_t i = 0; i < (it->second).size(); ++i) {
-                    if ((it->second)[i].endAirport == destinationAirport) {
+                for (size_t i = 0; i < (it->second).size(); ++i)
+                {
+                    if ((it->second)[i].endAirport == destinationAirport)
+                    {
                         return true;
                     }
                     //If the destination airport does not exist in map, add to map and queue of airports that need to be visited.
-                    if (redundantDestAirport.find((it->second)[i].endAirport) == redundantDestAirport.end()) {
-                        queue.push((it->second)[i].endAirport); 
+                    if (redundantDestAirport.find((it->second)[i].endAirport) == redundantDestAirport.end())
+                    {
+                        queue.push((it->second)[i].endAirport);
                         redundantDestAirport.insert(make_pair((it->second)[i].endAirport, 1));
-                    } 
+                    }
                 }
-            } 
+            }
         }
-        if (toPop == true) {
+        if (toPop == true)
+        {
             queue.pop();
         }
     }
     return false;
 }
+void Graph::Dijkstra(string startAirport, string targetAirport)
+{
+    // Check if startAirport is a vaid airport code
+    if (graphEdges.find(startAirport) == graphEdges.end())
+    {
 
-
-void Graph::Dijkstra(string start, string destination){
-    unordered_map<string, LatLong> validAirportName = getAirportsMap();
-    if (validAirportName.find(start) == validAirportName.end() || validAirportName.find(destination) == validAirportName.end()) {
+        ofstream outputFile;
+        outputFile.open("DijkstraOutput.txt");
+        outputFile << "Invalid airport code" << endl;
         return;
     }
-    unordered_map<string, vector<Edge>> validGraphEdge = getGraphEdges(); //need to check if valid
-    if (validGraphEdge.find(start) == validGraphEdge.end() || validGraphEdge.find(destination) == validGraphEdge.end()) {
-        return;
-    }
-    if(Graph::BFS(start, destination) == false){ //double check if i can do this
-        return;
-    }
-    priority_queue<string, float> pqueue;
-    queue<string> squeue;
-    pqueue.push(start, 0);
-    set<int> s;
-    for (auto it = graphEdges.begin(); it != graphEdges.end(); ++it){ //set all airport values to infinity
-        for (size_t i = 0; i < (it->second).size(); ++i){
-            //s.insert(it->second[i])
-        }
-    } 
-    bool Pop = true;
-    while (!pqueue.empty()) {
-        Pop = true;
-        for(auto it = graphEdges.begin(); it != graphEdges.end(); ++it){
-            if(it->first == pqueue.front()) {
-                pqueue.pop();
-                Pop = false;
-                for(size_t i = 0; i < (it->second).size(); ++i){
-                    /*if((it->second)[i].endAirport == destination){
 
-                    }*/
-                    if((it->second)[i].weight <= (it->first)[i].weight)){ //pushing the smallest distances to front of priority queue
-                        pqueue.push((it->second)[i].endAirport, (it->second)[i].weight);
-                    }
-                }
-            } 
-        }
-        if(Pop == true){
-            pqueue.pop();
+    //Check if there is a route to the airport
+    if(!BFS(startAirport, targetAirport))
+    {
+        ofstream outputFile;
+        outputFile.open("DijkstraOutput.txt");
+        outputFile << "No path exists from starting airport to target airport" << endl;
+        return;
+    }
+    ofstream outputFile;
+    outputFile.open("DijkstraOutput.txt");
+
+    unordered_map<string, pair<int, string>> pathData = DijkstraHelper(startAirport);
+    int distance = pathData[targetAirport].first;
+    outputFile << "SHORTEST DISTANCE: " << distance << endl;
+    
+    pair<int, string> currentAirport = pathData[targetAirport];
+    vector<string> reverseVector;
+    reverseVector.push_back(targetAirport);
+    outputFile << "SHORTEST PATH: ";
+    while(currentAirport.second != "START")
+    {
+        reverseVector.insert(reverseVector.begin(), currentAirport.second);
+        currentAirport = pathData[currentAirport.second];
+    }
+    for(size_t i = 0; i < reverseVector.size() - 1; i++)
+    {
+        outputFile << reverseVector[i] << "-";
+    }
+
+    outputFile << reverseVector[reverseVector.size() - 1] <<   endl;
+
+    outputFile << endl;
+    outputFile << "DIJKSTRA OUTPUT" << endl;
+    for (auto it = pathData.begin(); it != pathData.end(); it++)
+    {
+        outputFile << "Airport: " << it->first << " Distance: " << it->second.first << " Previous Airport: " << it->second.second << endl;
+    }
+}
+
+unordered_map<string, pair<int, string>> Graph::DijkstraHelper(string startAirport)
+{
+    //Initialize hasVisited hash map with all airports and mark as unvisited
+    unordered_map<string, bool> hasVisited;
+    //Initialize path data with all airports and pair with shortest distance as infinite and empty previous vertex
+    unordered_map<string, pair<int, string>> pathData;
+    for (auto it = airportsMap.begin(); it != airportsMap.end(); it++)
+    {
+        hasVisited[it->first] = false;
+        pathData[it->first] = {numeric_limits<int>::max(), "000"};
+    }
+
+    //Initialize a priority queue
+    // Pair: First = Distance from startAirport. Second = airportCode
+    priority_queue<pair<int, string>, vector<pair<int, string>>, greater<pair<int, string>>> priorityQueue;
+
+    //Insert startAirport into priorityQueue and set distance from startAirport = 0;
+    priorityQueue.push({0, startAirport});
+
+    //Set distance and previous vertex of starting aiport
+    pathData[startAirport] = {0, "START"};
+
+    while (!priorityQueue.empty())
+    {
+        // Get the top airport of the priority queue
+        pair<int, string> topAirport = priorityQueue.top();
+        // Pop the top airport
+        priorityQueue.pop();
+        // Mark the popped airport as already visited
+        hasVisited[topAirport.second] = true;
+
+        // Go through topAirport's adjacent airport
+        vector<Edge> adjacentAirports = graphEdges[topAirport.second];
+        for (auto it = adjacentAirports.begin(); it != adjacentAirports.end(); it++)
+        {
+            //If have already visited the node before
+            if (hasVisited[it->endAirport])
+            {
+                continue;
+            }
+
+            //Calculate potential best weight
+            int potentialWeight = topAirport.first + it->weight;
+
+            if (potentialWeight < pathData[it->endAirport].first)
+            {
+                //Update pathData map
+                pathData[it->endAirport].first = potentialWeight;
+                pathData[it->endAirport].second = topAirport.second;
+            }
+
+            //Add current adjacentAirport to priority queue
+            priorityQueue.push({pathData[it->endAirport].first, it->endAirport});
         }
     }
-    return;
+    return pathData;
 }
 
 // //GRAPH PUBLIC FUNCTIONS
@@ -265,5 +335,3 @@ unordered_map<string, vector<Graph::Edge>> Graph::getGraphEdges()
 {
     return graphEdges;
 }
-
-
