@@ -16,17 +16,17 @@ https://openflights.org/data.html
 
 ### Installation
 1. Clone the repo
-`https://github-dev.cs.illinois.edu/cs225-fa20/iia2-ericjin2-isaact2-pranshu3.git`
+* `https://github-dev.cs.illinois.edu/cs225-fa20/iia2-ericjin2-isaact2-pranshu3.git`
 
 2. Fetch code
- `git fetch relese`
- `git merge release/FILE_NAME -m "Merging release repository"`
+* `git fetch relese`
+* `git merge release/FILE_NAME -m "Merging release repository"`
 
 3. Make and compile code
-`make; make test`
+* `make; make test`
 
 4. Test code
-`./test`
+* `./test`
 
 
 
@@ -38,17 +38,17 @@ When complied and run, this code is used to calculate which paths an airplane ca
 ### Contributing
 In editing and completing the code, we use a series of git function to successfully add and push the files in the GitHub repository.
 
-`git add -u`
-`git commit -m "REPLACE THIS WITH MESSAGE OF CHANGES MADE"`
-`git push origin master`
+* `git add -u`
+* `git commit -m "REPLACE THIS WITH MESSAGE OF CHANGES MADE"`
+* `git push origin master`
 
 
 
 ### Contact
-Isaac Tong - isaact2@illinois.edu
-Eric Jin - ericjin2@illinois.edu
-Pranshu Chaturvedi - pranshu3@illinois.edu
-Irfaan Attarwala - iia2@illinois.edu
+* Isaac Tong - isaact2@illinois.edu
+* Eric Jin - ericjin2@illinois.edu
+* Pranshu Chaturvedi - pranshu3@illinois.edu
+* Irfaan Attarwala - iia2@illinois.edu
 
 
 
