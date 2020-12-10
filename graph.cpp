@@ -200,7 +200,7 @@ void Graph::Dijkstra(string startAirport, string targetAirport)
 
         ofstream outputFile;
         outputFile.open("DijkstraOutput.txt");
-        outputFile << "Invalid airport code" << endl;
+        outputFile << "Invalid starting airport code" << endl;
         return;
     }
 

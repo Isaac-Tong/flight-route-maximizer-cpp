@@ -3,7 +3,6 @@
 #include "../flightsVizualizer.h"
 #include "../cs225/PNG.h"
 #include <string>
-#include <iostream>
 
 using namespace std;
 
