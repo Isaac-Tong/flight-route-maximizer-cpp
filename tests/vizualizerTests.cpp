@@ -83,7 +83,7 @@ TEST_CASE("Correctly Outputs Two Airports Path", "[vizualizer]")
     vizualizer.printProjection();
 
     cs225::PNG actual;
-    actual.readFromFile("output.png");
+    actual.readFromFile("outputProjection.png");
 
     cs225::PNG expected;
     expected.readFromFile("./src/mercator.png");
@@ -140,7 +140,7 @@ TEST_CASE("Correctly Outputs 5 Routes From Heathrow Airport", "[vizualizer]")
     vizualizer.printProjection();
 
     cs225::PNG actual;
-    actual.readFromFile("output.png");
+    actual.readFromFile("outputProjection.png");
 
     cs225::PNG expected;
     expected.readFromFile("./src/mercator.png");
@@ -203,7 +203,7 @@ TEST_CASE("Correctly Outputs Vertical Alignment of Airports", "[vizualizer]")
     vizualizer.printProjection();
 
     cs225::PNG actual;
-    actual.readFromFile("output.png");
+    actual.readFromFile("outputProjection.png");
 
     cs225::PNG expected;
     expected.readFromFile("./src/mercator.png");
@@ -229,7 +229,7 @@ TEST_CASE("Correctly Outputs Vertical Alignment of Airports", "[vizualizer]")
         targetPixel.s = 1;
     }
 
-    expected.writeToFile("./tests/vizualizer_heathrow_expected.png");
+    expected.writeToFile("./tests/vizualizer_vertical_projection.png");
 
     REQUIRE(actual == expected);
 }

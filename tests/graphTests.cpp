@@ -3,59 +3,36 @@
 #include "../flightsVizualizer.h"
 #include "../cs225/PNG.h"
 #include <string>
+#include <vector>
 
 TEST_CASE("Test Graph Constructor Output", "[Graph]")
 {
-    /*string airportFile = "./tests/sets_to_test/airports_extended_formatted.txt";
-    string routesFile = "./tests/sets_to_test/routes_dataset.txt";
-    Graph newGraph(routesFile, airportFile);
-    string routesFileName = "airports_extended_formatted.txt";
-    string airportFileName = "routes_dataset.txt";
-  
-  
-  
-    string singleRouteDataset = "./tests/sets_to_test/single_path_dataset.txt";
-    string twoAirportsDataset = "./tests/sets_to_test/two_airports_dataset.txt";
-    Graph graph(singleRouteDataset, twoAirportsDataset);
-    string singleRouteFileName = "single_path_dataset.txt";
-    string twoAirportsFileName = "two_airports_dataset.txt";*/
-  
-    //auto test;
   
     string fiveRoutesDataset = "./tests/sets_to_test/dijkstra_five_routes.txt";
     string fiveAirportDataset = "./tests/sets_to_test/dijkstra_five_airports.txt";
 
     Graph graph(fiveRoutesDataset, fiveAirportDataset);
     
-    graph.getAirportsMap();
-    graph.getGraphEdges();
-    
-    ununordered_map<string, vector<Graph::Edge>> Graph::getGraphEdges()
-    {
-        return graphEdges;
-    }
+    unordered_map<string, Graph::LatLong> airportsMap = graph.getAirportsMap();
+    unordered_map<string, vector<Graph::Edge>> graphEdges = graph.getGraphEdges();
   
+    std::vector<int> expectedWeights;
+    expectedWeights.push_back(graph.weight("AAA", "BBB"));
+    expectedWeights.push_back(graph.weight("AAA", "DDD"));
+    expectedWeights.push_back(graph.weight("DDD", "BBB"));
+    expectedWeights.push_back(graph.weight("DDD", "EEE"));
+    expectedWeights.push_back(graph.weight("BBB", "EEE"));
+    expectedWeights.push_back(graph.weight("BBB", "CCC"));
+    expectedWeights.push_back(graph.weight("EEE", "CCC"));
+    int counter = 0;
     for (auto it = graphEdges.begin(); it != graphEdges.end(); ++it)
     {
-        cout << "Starting Airport: " << it->first << endl;
-        cout << "Incident Edges:" << endl;
         for (size_t i = 0; i < (it->second).size(); ++i)
         {
-            cout << "Incident Airport: " << (it->second)[i].endAirport << " Airline Code: " << (it->second)[i].airlineCode << " Weight: " << (it->second)[i].weight << endl;
+   REQUIRE((it->second)[i].weight == expectedWeights[counter]);
+   counter++;
         }
-        cout << endl;
     }
-  
-  
-    ifstream output("graphtest.txt");
-    string line;
-    getline(output, line);
-    int expectedDist = graph.weight("AAA", "EEE");
-    stringstream actualDisLine(line);
-    stringstream expectedDisLine;
-    expectedDisLine << expectedDist;
-    REQUIRE(actualDisLine.str() == expectedDisLine.str());
-  
 }
 
 TEST_CASE("Finds Single Path Between Airports", "[BFS]")
@@ -85,7 +62,7 @@ TEST_CASE("Finds Single Path Between Airports", "[BFS]")
     bfsFile.close();
 }
 
-TEST_CASE("Invalid Start Airport Code", "[dijkstra]")
+TEST_CASE("Invalid Starting Airport Code", "[dijkstra]")
 {
     string singleRouteDataset = "./tests/sets_to_test/single_path_dataset.txt";
     string twoAirportsDataset = "./tests/sets_to_test/two_airports_dataset.txt";
