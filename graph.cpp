@@ -277,13 +277,14 @@ unordered_map<string, pair<int, string>> Graph::DijkstraHelper(string startAirpo
 
     while (!priorityQueue.empty())
     {
+
         // Get the top airport of the priority queue
         pair<int, string> topAirport = priorityQueue.top();
         // Pop the top airport
         priorityQueue.pop();
         // Mark the popped airport as already visited
         hasVisited[topAirport.second] = true;
-
+        
         // Go through topAirport's adjacent airport
         vector<Edge> adjacentAirports = graphEdges[topAirport.second];
         for (auto it = adjacentAirports.begin(); it != adjacentAirports.end(); it++)
