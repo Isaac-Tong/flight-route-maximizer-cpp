@@ -5,16 +5,19 @@
 ## About The Final Project
 For our CS225 Final Project, we chose the OpenFlights Dataset to create a graph. Our objective was to calculate the sequence of routes to take in order to minimize the physical traveling distance between two airports. We completed this by implementing Dijkstra's algorithm.Another algorithm used is Breadth-First Search which allows us to figure out if we are able to travel between the two airports given.
 
+#
 ## Final Project Presentation
 Link: https://youtu.be/F1Ar8MY7jUU
-
+#
 ## Dataset
 https://openflights.org/data.html
 1. Airports Dataset: https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports-extended.dat
 2. Routes Dataset: https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports-extended.dat
 
-
+#
 ## Build and Run 
+
+__NOTE: The program might take a significant amount of time if the dataset is large__
 
 1. Compile the code
 ```
@@ -37,6 +40,42 @@ $ ./flightsOpt ORD AKL default default
 \
 *__Note 2:__ In both options, you MUST specify the starting airport and ending airport for the first two arguments using the IATA codes for the airport. Eg. ORD = Chicago O'Hare*
 
+### World Map Projection Image
+```
+"outputProjection.png" projects all the routes in the dataset onto the world map.
+
+"outputShortest.png" projects the minimum weighted path given the starting airport and ending airport onto the world map.
+
+```
+
+### Output Files
+To assist with grading our algorithms, whenever BFS or Djikstra's algorithm is run, "DijksrtaOutput.txt" and "bfs_airports_visited.txt" will be generated.
+
+__DijksrtaOutput.txt__
+```
+Example Output:
+
+SHORTEST DISTANCE: 12345
+SHORTEST PATH: XXX-YYY-ZZZ
+
+DIJKSTRA OUTPUT
+Airport: YXU Distance: 1345 Previous Airport: START
+Airport: OPF Distance: 1908 Previous Airport: OPF
+Airport: GOP Distance: 14068 Previous Airport: DEL
+
+** To get the shortest weighted path of an airport to the starting airport, keep going back to the previous airport until START has been reached. A distance of 2147483647 or some other ridiculously large number means that that there is no connection from that airport to the starting airport.
+```
+__bfs_airports_visited.txt__
+```
+Example Output:
+
+Start of BFS between XXX and ZZZ
+YVR
+EWR
+HND
+NRT
+ORD
+```
 
 ## Build and Run Test Cases
 1. Compile the code
