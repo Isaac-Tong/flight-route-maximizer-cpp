@@ -1,46 +1,58 @@
-# iia2-ericjin2-isaact2-pranshu3
-## Final Project
+# CS225 Final Project | Isaac, Irfaan, Pranshu, Eric
 
+![Flight Path Map](/src/readme_img.png)
 
-### About The Final Project
-![Flight Path Map](/output.png)
+## About The Final Project
+For our CS225 Final Project, we chose the OpenFlights Dataset to create a graph. Our objective was to calculate the sequence of routes to take in order to minimize the physical traveling distance between two airports. We completed this by implementing Dijkstra's algorithm.Another algorithm used is Breadth-First Search which allows us to figure out if we are able to travel between the two airports given.
 
-For our CS225 Final Project, we chose the OpenFlights Dataset to complete from our given dataset options. Our objective was to calculate the shortest distance between two airports. We completed this by implementing Dijkstra's function which finds the shortest possible distance given with two given airport locations, given there is a path. All of the possible path are shown in the world map image above. Another algorithm used is the Breadth-First Search, or BFS, which allows us to figure out if we are able to travel between the two airports given.
+## Final Project Presentation
+Link: https://youtu.be/F1Ar8MY7jUU
 
-
-
-### Data Used
+## Dataset
 https://openflights.org/data.html
+1. Airports Dataset: https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports-extended.dat
+2. Routes Dataset: https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports-extended.dat
+
+
+## Build and Run 
+
+1. Compile the code
+```
+$ /make
+```
+2. You have two options to run the executable
+```
+# OPTION 1: Run ./flightsOpt with arguments: [starting Airport IATA Code] [destination Airport IATA Code] [path to routes file] [path to airports file]
+
+Example:
+$ ./flightsOpt ORD AKL ./tests/sets_to_test/./dataset/routes_subset.txt ./dataset/airports_extended_formatted.txt
+```
+```
+# OPTION 2: Run ./flightsOpt with arguments: [starting Airport IATA Code] [destination Airport IATA Code] default default
+
+Example:
+$ ./flightsOpt ORD AKL default default
+```
+*__Note 1:__ Running the executable with option 1 allows you to specify the airport and routes dataset while running the executable with option 2 will use our default airport and routes dataset.*\
+\
+*__Note 2:__ In both options, you MUST specify the starting airport and ending airport for the first two arguments using the IATA codes for the airport. Eg. ORD = Chicago O'Hare*
+
+
+## Build and Run Test Cases
+1. Compile the code
+```
+$ /make test
+```
+
+2. Run the test cases
+```
+$ ./test
+```
+
+## Formatting / Using Your Own Dataset
 
 
 
-### Installation
-1. Clone the repo
-`https://github-dev.cs.illinois.edu/cs225-fa20/iia2-ericjin2-isaact2-pranshu3.git`
-
-2. Fetch code
-`git fetch relese`
-`git merge release/FILE_NAME -m "Merging release repository"`
-
-3. Make and compile code
-`make; make test`
-
-4. Test code
-`./test`
-
-
-
-### Usage
-When complied and run, this code is used to calculate which paths an airplane can take from one airport to another. When given the specific starting point and ending point, the code will determine if there is a path connecting to those two airport locations and it will find the shortest path to those airports. It does this by calculating the distance from the starting airport to the next, searching for the shortest path and checking every possible path to print the shortest path.
-
-
-
-### Contributing
-In editing and completing the code, we use a series of git function to successfully add and push the files in the GitHub repository.
-
-* `git add -u`
-* `git commit -m "REPLACE THIS WITH MESSAGE OF CHANGES MADE"`
-* `git push origin master`
 
 
 
@@ -52,6 +64,4 @@ In editing and completing the code, we use a series of git function to successfu
 
 
 
-### Final Project Link:
-https://github-dev.cs.illinois.edu/cs225-fa20/iia2-ericjin2-isaact2-pranshu3.git
 
