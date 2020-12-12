@@ -50,13 +50,30 @@ $ ./test
 ```
 
 ## Formatting / Using Your Own Dataset
+In order for our program to understand your own airport and routes dataset text files, they must be formatted in a very specific way. The following description will tell you how to format your airport and routes text file. 
 
+### Airports File
+*Each piece of data must be separated by a comma*
+```
+Format:
+[Airport IATA Code],[Lattitude],[Longitude],airport
 
+Example:
+YVR,49.19390106,-123.1839981,airport
+```
 
+### Routes File
+*Each piece of data must be separated by a comma*\
+__*Although not all pieces of information of the routes are neccesary for our program, it is neccesary that you include them as our data parsing function will require their existance__
+```
+Format:
+[IATA Airline ID],[Openflights Airline ID],[Starting Airport IATA Code],[Starting Airport Openflights ID],[Destination Airport IATA Code],[Destination Airport Openflights ID],[Codeshare],[Stops],[Equipment]
 
+Example:
+2B,410,DME,4029,KZN,2990,,0,CR2
+```
 
-
-### Contact
+## Contact
 * Isaac Tong - isaact2@illinois.edu
 * Eric Jin - ericjin2@illinois.edu
 * Pranshu Chaturvedi - pranshu3@illinois.edu
