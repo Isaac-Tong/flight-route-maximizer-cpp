@@ -126,15 +126,12 @@ void flightsVizualizer::printProjection()
     worldMap.writeToFile("outputProject.png");
 }
 
-void flightsVizualizer::printShortest(string startingAirport, string destinationAirport)
+void flightsVizualizer::printShortest(vector<string> path)
 {
     // Reset map
     worldMap.readFromFile("./src/mercator.png");
 
     unordered_map<string, Graph::LatLong> airportsMap = graph.getAirportsMap();
-    
-    // Use Dijkstra's algorithm to get the shortest weighted path
-    vector<string> path = graph.Dijkstra(startingAirport, destinationAirport);
 
     // Mark the airport on the world map
     for(size_t i = 0; i < path.size(); ++i)

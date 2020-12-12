@@ -1,3 +1,14 @@
-Start of BFS between XMN and CSX
-XMN
-CSX
+Start of BFS between ORD and SFO
+ORD
+ACY
+BOS
+DEN
+DFW
+FLL
+IAH
+LAS
+LAX
+LGA
+MCO
+MSP
+SFO

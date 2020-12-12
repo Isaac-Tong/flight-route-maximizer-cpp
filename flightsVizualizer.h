@@ -18,7 +18,7 @@ public:
     void printProjection();
 
     //Uses Djikstra's algorithm to print the shortest path between two airports on the world map
-    void printShortest(string startingAirport, string destinationAirport);
+    void printShortest(vector<string> path);
 
     void drawConnection(double x1, double y1, double x2, double y2);
     

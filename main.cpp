@@ -7,11 +7,18 @@
 using namespace std;
 int main(int argc, char *argv[])
 {
+    if(argv[1] == NULL || argv[2] == NULL || argv[3] == NULL || argv[4] == NULL)
+    {
+        cout << "Please enter space separated command line arguments in the following format: \nstartingAirportCode (eg. SFO) destinationAirportCode (eg. JFK) routesFileLocation (i.e file path) airportsFileLocation (i.e file path)" << endl;
+        return 0;
+    }
+
     // Parse arguments from user
     string startingAirport = argv[1];
     string destinationAirport = argv[2];
     string routesFile = argv[3];
     string airportsFile = argv[4];
+
 
     // Remove previous BFS and Dijkstra's outputs.
     system("rm bfs_airports_visited.txt");
@@ -61,10 +68,14 @@ int main(int argc, char *argv[])
 
     // Run Dijkstra's algorithm and BFS to find the shortest path
     // Output may have previous airport as "000" if the airport is not in the dataset being used.
-    flightGraph.Dijkstra(startingAirport, destinationAirport);
+    vector<string> path = flightGraph.Dijkstra(startingAirport, destinationAirport);
     cout << "Saving Dijktra's Algorithm output to DijkstraOutput.txt" << endl;
 
+    // Print shortest path onto world map
     flightsVizualizer vizualizer(flightGraph);
+    vizualizer.printShortest(path);
+
+    // Print the entire routes dataset onto the world map
     vizualizer.printProjection();
 
     routesFileIF.close();
