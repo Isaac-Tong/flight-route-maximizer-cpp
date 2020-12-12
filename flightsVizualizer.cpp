@@ -63,12 +63,12 @@ void flightsVizualizer::markAirport(double lat, double lon)
 }
 double flightsVizualizer::translateXCoordinate(double lon)
 {
-    double length = 2058;
+    double length = 2056;
     return (lon + 180) * (length / 360);
 }
 double flightsVizualizer::translateYCoordinate(double lat)
 {
-        double length = 2058;
+        double length = 2056;
         return (length / 2) - ((length * log(tan((PI / 4) + ((lat * (PI / 180)) / 2)))) / (2 * PI));
     
 }
@@ -123,7 +123,7 @@ void flightsVizualizer::printProjection()
         iterator++;
     }
 
-    worldMap.writeToFile("outputProject.png");
+    worldMap.writeToFile("outputProjection.png");
 }
 
 void flightsVizualizer::printShortest(vector<string> path)
