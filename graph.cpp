@@ -40,6 +40,10 @@ void Graph::mapStartAirportToEdge(string routeFile)
 
     // Process the routes dataset line by line
     ifstream routeFileIF(routeFile);
+    if (!routeFileIF.is_open()) {
+        cout << "Unable to open route file" << endl;
+        return;
+    }
     string routeFileLine;
     while (getline(routeFileIF, routeFileLine))
     {

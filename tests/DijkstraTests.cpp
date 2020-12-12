@@ -33,6 +33,7 @@ TEST_CASE("Finds Shortest Path Between Airports: Small", "[dijkstra]")
     getline(dijkstraOutput, line);
     stringstream actualMove2Line(line);
     REQUIRE(actualMove2Line.str() ==  "Airport: BBB Distance: 4493 Previous Airport: AAA");
+    
 }
 
 TEST_CASE("Finds Shortest Path Between Airports: Medium", "[dijkstra]")

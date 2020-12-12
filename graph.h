@@ -38,6 +38,7 @@ public:
         double lon; // longitude
     };
     Graph(string routesFileName, string airportFileName);
+
     Graph(Graph &other);
     Graph();
     void printGraph();

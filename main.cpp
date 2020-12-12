@@ -5,14 +5,13 @@
 using namespace std;
 int main(int argc, char *argv[])
 {
-    string airportFile = "./dataset/airports_dataset.txt";
-    //string airportFile = "./dataset/airports_extended_formatted.txt";
+    string airportFile = "./dataset/airports_extended_formatted.txt";
     //string airportFile = "./dataset/test.txt";
     string routesFile = "./dataset/routes_dataset.txt";
     Graph newGraph(routesFile, airportFile);
 
-    // newGraph.printAirports();
-    //newGraph.printGraph();
+    //newGraph.printAirports();
+    newGraph.printGraph();
 
     // flightsVizualizer vizualizer(newGraph);
     // double lat1 = 51.4700;
@@ -55,7 +54,7 @@ int main(int argc, char *argv[])
 
     /*
     string startingAirport = "CMI";
-    string endingAirport = "DEL";
+    string endingAirport = "SJC";
     if (newGraph.BFS(startingAirport, endingAirport)) {
         cout << "A path betweeen " << startingAirport << " and " << endingAirport << " exists" << endl;
     } else {
