@@ -7,7 +7,7 @@ flightsVizualizer::flightsVizualizer(Graph graph)
     this->worldMap.readFromFile("./src/mercator.png");
 }
 
-void flightsVizualizer::drawConnection(double x1, double y1, double x2, double y2, string airportS, string airportE)
+void flightsVizualizer::drawConnection(double x1, double y1, double x2, double y2)
 {
     if (x1 > x2)
     {
@@ -75,6 +75,9 @@ double flightsVizualizer::translateYCoordinate(double lat)
 
 void flightsVizualizer::printProjection()
 {
+    //Reset map
+    worldMap.readFromFile("./src/mercator.png");
+
     //Fetch edgeMap and airportsMap from graph structure
     unordered_map<string, Graph::LatLong> airportsMap = this->graph.getAirportsMap();
     unordered_map<string, vector<Graph::Edge>> edgesMap = this->graph.getGraphEdges();
@@ -115,10 +118,39 @@ void flightsVizualizer::printProjection()
                 hasPrinted[adjacentAirports[i].endAirport] = true;
             }
 
-            drawConnection(translateXCoordinate(lonStart), translateYCoordinate(latStart), translateXCoordinate(lonEnd), translateYCoordinate(latEnd), airport, adjacentAirports[i].endAirport);
+            drawConnection(translateXCoordinate(lonStart), translateYCoordinate(latStart), translateXCoordinate(lonEnd), translateYCoordinate(latEnd));
         }
         iterator++;
     }
 
-    worldMap.writeToFile("output.png");
+    worldMap.writeToFile("outputProject.png");
+}
+
+void flightsVizualizer::printShortest(string startingAirport, string destinationAirport)
+{
+    // Reset map
+    worldMap.readFromFile("./src/mercator.png");
+
+    unordered_map<string, Graph::LatLong> airportsMap = graph.getAirportsMap();
+    
+    // Use Dijkstra's algorithm to get the shortest weighted path
+    vector<string> path = graph.Dijkstra(startingAirport, destinationAirport);
+
+    // Mark the airport on the world map
+    for(size_t i = 0; i < path.size(); ++i)
+    {
+        markAirport(airportsMap[path[i]].lat, airportsMap[path[i]].lon);
+    }
+
+    //Mark the route
+    int current = 0;
+    int next = 1;
+    for(size_t i = 0; i < path.size() - 1; ++i)
+    {
+        drawConnection(translateXCoordinate(airportsMap[path[current]].lon), translateYCoordinate(airportsMap[path[current]].lat), translateXCoordinate(airportsMap[path[next]].lon), translateYCoordinate(airportsMap[path[next]].lat));
+        current++;
+        next++;
+    }
+
+    worldMap.writeToFile("outputShortest.png");
 }

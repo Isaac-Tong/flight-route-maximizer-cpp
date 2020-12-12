@@ -17,7 +17,10 @@ public:
     //Outputs the worldMap as a PNG
     void printProjection();
 
-    void drawConnection(double x1, double y1, double x2, double y2, string airportS, string airportE);
+    //Uses Djikstra's algorithm to print the shortest path between two airports on the world map
+    void printShortest(string startingAirport, string destinationAirport);
+
+    void drawConnection(double x1, double y1, double x2, double y2);
     
     double translateXCoordinate(double lon);
     double translateYCoordinate(double lat);

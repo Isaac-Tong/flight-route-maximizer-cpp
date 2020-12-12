@@ -46,7 +46,8 @@ public:
     // BFS to see if the destination airport is reachable from the starting airport.
     bool BFS(string startingAirport, string destinationAirport);
     // Dijkstra's algorithm to find the shortest path from the starting airport to the destination airport.
-    void Dijkstra(string startAirport, string targetAirport);
+    vector<string> Dijkstra(string startAirport, string targetAirport);
+
     unordered_map<string, pair<int, string>> DijkstraHelper(string startAirport);
 
     // Getters to attain graph and airport to coordinate mapping

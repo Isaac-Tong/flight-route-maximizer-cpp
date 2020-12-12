@@ -202,7 +202,8 @@ bool Graph::BFS(string startingAirport, string destinationAirport)
     }
     return false;
 }
-void Graph::Dijkstra(string startAirport, string targetAirport)
+
+vector<string> Graph::Dijkstra(string startAirport, string targetAirport)
 {
     // Check if startAirport is a vaid airport code
     if (graphEdges.find(startAirport) == graphEdges.end())
@@ -211,7 +212,7 @@ void Graph::Dijkstra(string startAirport, string targetAirport)
         ofstream outputFile;
         outputFile.open("DijkstraOutput.txt");
         outputFile << "Invalid starting airport code" << endl;
-        return;
+        return vector<string>();
     }
 
     //Check if there is a route to the airport
@@ -220,7 +221,7 @@ void Graph::Dijkstra(string startAirport, string targetAirport)
         ofstream outputFile;
         outputFile.open("DijkstraOutput.txt");
         outputFile << "No path exists from starting airport to target airport" << endl;
-        return;
+        return vector<string>();
     }
     ofstream outputFile;
     outputFile.open("DijkstraOutput.txt");
@@ -251,6 +252,8 @@ void Graph::Dijkstra(string startAirport, string targetAirport)
     {
         outputFile << "Airport: " << it->first << " Distance: " << it->second.first << " Previous Airport: " << it->second.second << endl;
     }
+
+    return reverseVector;
 }
 
 unordered_map<string, pair<int, string>> Graph::DijkstraHelper(string startAirport)
