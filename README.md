@@ -1,14 +1,10 @@
-# CS225 Final Project | Isaac, Irfaan, Pranshu, Eric
+# Flight Route Maximizer | Isaac, Irfaan, Pranshu, Eric
 
 ![Flight Path Map](/src/readme_img.png)
 
-## About The Final Project
-For our CS225 Final Project, we chose the OpenFlights Dataset to create a graph. Our objective was to calculate the sequence of routes to take in order to minimize the physical traveling distance between two airports. We completed this by implementing Dijkstra's algorithm.Another algorithm used is Breadth-First Search which allows us to figure out if we are able to travel between the two airports given.
+## About The Project
+Our objective was to calculate the sequence of routes to take in order to minimize the physical traveling distance between two airports. We completed this by implementing Dijkstra's algorithm.Another algorithm used is Breadth-First Search which allows us to figure out if we are able to travel between the two airports given.
 
-#
-## Final Project Presentation
-Link: https://youtu.be/F1Ar8MY7jUU
-#
 ## Dataset
 https://openflights.org/data.html
 1. Airports Dataset: https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports-extended.dat
@@ -49,7 +45,7 @@ $ ./flightsOpt ORD AKL default default
 ```
 
 ### Output Files
-To assist with grading our algorithms, whenever BFS or Djikstra's algorithm is run, "DijksrtaOutput.txt" and "bfs_airports_visited.txt" will be generated.
+Whenever BFS or Djikstra's algorithm is run, "DijksrtaOutput.txt" and "bfs_airports_visited.txt" will be generated.
 
 __DijksrtaOutput.txt__
 ```
@@ -117,7 +113,3 @@ Example:
 * Eric Jin - ericjin2@illinois.edu
 * Pranshu Chaturvedi - pranshu3@illinois.edu
 * Irfaan Attarwala - iia2@illinois.edu
-
-
-
-
